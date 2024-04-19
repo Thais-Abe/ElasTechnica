@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  >
+<head>
+    <meta charset="UTF-8">
+    <title>Esta é a página do detalhe da solicitação</title>
+</head>
+<body>
+
+<h1>Detalhes do chamado: </h1>
+
+<label>Nome do solicitante: </label> <span th:text="${nome}"></span>
+<label>Setor: </label> <span th:text="${setor}"></span>
+<label>Data da abertura </label>
+<label>Grau de prioridade: </label> <span th:text="${prioridade}"></span>
+<label>Dados da solicitação: </label> <span th:text="${descricao}"></span>
+
+<p>Mudar status do chamado</p>
+<button onclick="/pagina-usuario">Voltar</button>
+</body>
+</html>
