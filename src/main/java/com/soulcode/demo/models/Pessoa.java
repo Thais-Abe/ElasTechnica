@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 
 @Entity
 public class Pessoa {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
@@ -19,7 +20,13 @@ public class Pessoa {
 
     @Column
     private String Senha;
+
+    @ManyToOne
+    @JoinColumn(name = "setor_id")
     private Setor Setor;
-    private Tipo Tipo;
+
+    @ManyToOne
+    @JoinColumn(name = "tipo_id")
+    private Tipo tipo;
 
 }
