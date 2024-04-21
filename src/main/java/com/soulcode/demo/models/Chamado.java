@@ -28,4 +28,75 @@ public class Chamado {
     @JoinColumn(name = "usuario_id")
     private Pessoa Usuario;
 
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
+
+    public String getTitulo() {
+        return Titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        Titulo = titulo;
+    }
+
+    public String getDescricao() {
+        return Descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        Descricao = descricao;
+    }
+
+    public int getPrioridade() {
+        return Prioridade;
+    }
+
+    public void setPrioridade(int prioridade) {
+        Prioridade = prioridade;
+    }
+
+    public LocalDateTime getDataInicio() {
+        return DataInicio;
+    }
+
+    public void setDataInicio(LocalDateTime dataInicio) {
+        DataInicio = dataInicio;
+    }
+
+    public com.soulcode.demo.models.Setor getSetor() {
+        return Setor;
+    }
+
+    public void setSetor(com.soulcode.demo.models.Setor setor) {
+        Setor = setor;
+    }
+
+    public com.soulcode.demo.models.Status getStatus() {
+        return Status;
+    }
+
+    public void setStatus(com.soulcode.demo.models.Status status) {
+        Status = status;
+    }
+
+    public Pessoa getTecnico() {
+        return Tecnico;
+    }
+
+    public void setTecnico(Pessoa tecnico) {
+        Tecnico = tecnico;
+    }
+
+    public Pessoa getUsuario() {
+        return Usuario;
+    }
+
+    public void setUsuario(Pessoa usuario) {
+        Usuario = usuario;
+    }
 }
