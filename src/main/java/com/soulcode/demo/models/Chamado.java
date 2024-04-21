@@ -2,11 +2,12 @@ package com.soulcode.demo.models;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
-@Table(name = "Chamado")
+@Table(name = "chamado")
 public class Chamado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,7 +62,8 @@ public class Chamado {
     }
 
     public LocalDateTime getDataInicio() {
-        return DataInicio;
+        LocalDateTime dataAtual = LocalDateTime.now();
+        return dataAtual;
     }
 
     public void setDataInicio(LocalDateTime dataInicio) {
