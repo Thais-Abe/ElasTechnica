@@ -18,7 +18,7 @@ public class AutenticacaoService {
         return usuarioExistente != null;
     }
 
-    public void cadastrarNovoUsuario(String nome, String email, String senha, int tipoId, int setorId) {
+    public void cadastrarNovoUsuario(String nome, String email, String senha, int tipoId) {
         Pessoa usuario = new Pessoa();
         usuario.setNome(nome);
         usuario.setEmail(email);
@@ -27,10 +27,6 @@ public class AutenticacaoService {
         Tipo tipo = new Tipo();
         tipo.setId(tipoId);
         usuario.setTipo(tipo);
-
-        Setor setor = new Setor();
-        setor.setId(setorId);
-        usuario.setSetor(setor);
 
         pessoaRepository.save(usuario);
     }

@@ -66,7 +66,6 @@ public class ChamadoService {
         usuario1.setNome("Maria Das Flores");
         usuario1.setEmail("maria.usuario@gmail.com");
         usuario1.setSenha("senha456");
-        usuario1.setSetor(setorAdmin);
         usuario1.setTipo(tipoCliente);
 
         pessoaRepository.save(usuario1);
@@ -75,7 +74,6 @@ public class ChamadoService {
         usuario1.setNome("Carlos Rocha");
         usuario1.setEmail("carlosrocha.user@gmail.com");
         usuario1.setSenha("senha456");
-        usuario1.setSetor(setorTI);
         usuario1.setTipo(tipoCliente);
 
 
