@@ -21,6 +21,14 @@ public class AutenticacaoController {
 
     @RequestMapping(value = "/cadastro-usuario", method = RequestMethod.POST)
     public String save(@RequestParam String nome , @RequestParam String email, String senha, int tipoId, int setorId, Model model) {
+
+        Pessoa userExistente = pessoaRepository.findByEmail(email);
+
+        if (userExistente != null) {
+            model.addAttribute("error", "Este e-mail já está em uso. Por favor, escolha outro.");
+            return "cadastro-usuario";
+        }
+
         Pessoa usuario = new Pessoa();
         usuario.setNome(nome);
         usuario.setEmail(email);
