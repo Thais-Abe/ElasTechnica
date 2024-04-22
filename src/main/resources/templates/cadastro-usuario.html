@@ -149,25 +149,33 @@ footer div a {
 <body>
     <div class="login-container">
         <img src="./styleCadastro/logo.png">
-        <form action="/submit-cadastro" method="post">
-            <label for="username">Nome:</label>
-            <input type="text" name="username" id="username" required>
-            <label for="username">Email:</label>
-            <input type="text" name="email" id="email" required>
-            <label for="password">Senha:</label>
-            <input type="password" name="password" id="password" required>
-            <label for="password">Confirmar Senha:</label>
+
+        <form action="/cadastro-usuario" method="post">
+            <label for="nome">Nome:</label>
+            <input type="text" name="nome" id="nome" required>
+
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" required>
+
+            <label for="senha">Senha:</label>
+            <input type="password" name="senha" id="senha" required>
+
+            <label for="senha">Confirmar Senha:</label>
             <input type="password" name="password" id="confirm-password" required>
+
             <label for="tipoId">Tipo:</label>
             <select id="tipoId" name="tipoId">
-                <option value= 2 >Tecnico</option>
+                <option value= 2>Tecnico</option>
                 <option value=1>Cliente</option>
             </select>
+
             <div class="buttons">
                 <button type="submit">Cadastrar</button>
                 <button type="reset">Cancelar</button>
             </div>
+
         </form>
+
     </div>
     <footer class="footer">
         <div class="github-primeiro">
