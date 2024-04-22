@@ -52,7 +52,7 @@ public class TecnicoController {
         for (Chamado chamado : todosChamados) {
             if (chamado.getStatus().getId() == 1) {
                 chamadosDisponiveis.add(chamado);
-            } else if (chamado.getStatus().getId() == 2) {
+            } else if (chamado.getStatus().getId() == 2 || chamado.getStatus().getId() == 4) {
                 chamadosEmAtendimento.add(chamado);
             }
         }
@@ -79,6 +79,14 @@ public class TecnicoController {
 
         if (status == 1) {
             Status novoStatus = statusRepository.findById(2).orElse(null);
+            if (novoStatus != null) {
+                chamado.setStatus(novoStatus);
+                chamadoService.salvarChamado(chamado);
+
+                return "redirect:/pagina-tecnico?status=atualizado";
+            }
+        } else if (status == 2) {
+            Status novoStatus = statusRepository.findById(4).orElse(null);
             if (novoStatus != null) {
                 chamado.setStatus(novoStatus);
                 chamadoService.salvarChamado(chamado);
