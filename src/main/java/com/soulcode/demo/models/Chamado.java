@@ -2,8 +2,10 @@ package com.soulcode.demo.models;
 
 import jakarta.persistence.*;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Entity
@@ -62,8 +64,11 @@ public class Chamado {
     }
 
     public LocalDateTime getDataInicio() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime dataAtual = LocalDateTime.now();
-        return dataAtual;
+        String dataFormatada = dataAtual.format(formatter);
+        LocalDateTime dataConvertida = LocalDateTime.parse(dataFormatada, formatter);
+        return dataConvertida;
     }
 
     public void setDataInicio(LocalDateTime dataInicio) {

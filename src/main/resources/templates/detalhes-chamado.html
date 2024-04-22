@@ -5,14 +5,14 @@
     <title>Esta é a página do detalhe da solicitação</title>
 </head>
 <body>
-<form action="/pagina-usuario" th:object="${chamado}" method="GET">
+<form action="/pagina-usuario"  method="GET">
 <h1>Detalhes do chamado: </h1>
 
 <label>Nome do solicitante: </label> <span th:text="${nome}"></span>
-<label>Setor: </label> <span th:field="${setor}"></span>
-<label>Data da abertura </label>
-<label>Grau de prioridade: </label> <span th:field="${prioridade}"></span>
-<label>Dados da solicitação: </label> <span th:field="${descricao}"></span>
+<label>Setor: </label> <span th:text="${chamado.setor}"></span><br/>
+<label>Data da abertura <span th:text="${chamado.getDataInicio()}"></span></label>
+<label>Grau de prioridade: </label> <span th:text="${chamado.prioridade}"></span>
+<label>Dados da solicitação: </label> <span th:text="${chamado.descricao}"></span>
 
 <p>Mudar status do chamado</p>
 <button >Voltar</button>

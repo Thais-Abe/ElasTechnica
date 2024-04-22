@@ -11,21 +11,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-
 @Controller
 public class UsuarioController {
 
     Chamado chamado = new Chamado();
     @Autowired
-    ChamadoRepository chamadoRepository;
+    private final ChamadoRepository chamadoRepository;
 
     @Autowired
     PessoaRepository pessoaRepository;
+
+    public UsuarioController(ChamadoRepository chamadoRepository) {
+        this.chamadoRepository = chamadoRepository;
+    }
+
     @GetMapping("/login-usuario")
     public String paginaLoginUsuario() {
         return "login-usuario";
     }
+
 
     @GetMapping("/pagina-usuario")
     public String paginaUsuario(@RequestParam("nome") String nome, Model model) {
@@ -39,23 +43,17 @@ public class UsuarioController {
     }
 
 
-    @GetMapping("/detalhes-chamado")
-    public String teste5(@RequestParam("nome") String nome, Model model, @RequestParam("setor") String setor, @RequestParam("prioridade") String prioridade, @RequestParam("solicitacao") String solicitacao) {
-
-        model.addAttribute("nome", nome);
-        model.addAttribute("setor", setor);
-//        model.addAttribute("data", LocalDate.now());
-        model.addAttribute("prioridade", prioridade);
-        model.addAttribute("solicitacao", solicitacao);
+    @GetMapping("/detalhes-chamado/{Id}")
+    public String retornaPaginaDetalhes(@PathVariable("Id") int id, Model model){
+        chamado = chamadoRepository.findById(id).orElse(null);
+        model.addAttribute("chamado", chamado);
         return "detalhes-chamado";
     }
 
 
-
-    @GetMapping("/cadastro-usuario")
+    @GetMapping("/cadastro")
     public String criarUsuario() {
-
-        return "cadastro-usuario";
+        return "cadastro";
     }
 
     @RequestMapping(value = "/cadastro-usuario", method = RequestMethod.POST)
