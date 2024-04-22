@@ -22,10 +22,6 @@ public class Pessoa {
     private String Senha;
 
     @ManyToOne
-    @JoinColumn(name = "setor_id")
-    private Setor Setor;
-
-    @ManyToOne
     @JoinColumn(name = "tipo_id")
     private Tipo tipo;
 
@@ -59,14 +55,6 @@ public class Pessoa {
 
     public void setSenha(String senha) {
         Senha = senha;
-    }
-
-    public com.soulcode.demo.models.Setor getSetor() {
-        return Setor;
-    }
-
-    public void setSetor(com.soulcode.demo.models.Setor setor) {
-        Setor = setor;
     }
 
     public Tipo getTipo() {

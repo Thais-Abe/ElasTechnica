@@ -22,14 +22,14 @@ public class AutenticacaoController {
     AutenticacaoService autenticacaoService;
 
     @RequestMapping(value = "/cadastro-usuario", method = RequestMethod.POST)
-    public String save(@RequestParam String nome , @RequestParam String email, String senha, int tipoId, int setorId, Model model) {
+    public String save(@RequestParam String nome , @RequestParam String email, String senha, int tipoId, Model model) {
 
         if (autenticacaoService.verificarSeOEmailJaExiste(email)) {
             model.addAttribute("error", "Este e-mail já está em uso. Por favor, escolha outro.");
             return "cadastro-usuario";
         }
 
-        autenticacaoService.cadastrarNovoUsuario(nome, email, senha, tipoId, setorId);
+        autenticacaoService.cadastrarNovoUsuario(nome, email, senha, tipoId);
 
         return "redirect:/login-usuario";
     }
