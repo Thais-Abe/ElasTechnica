@@ -67,23 +67,20 @@ public class ChamadoService {
         usuario1.setEmail("maria.usuario@gmail.com");
         usuario1.setSenha("senha456");
         usuario1.setTipo(tipoCliente);
-
         pessoaRepository.save(usuario1);
 
         Pessoa usuario2 = new Pessoa();
-        usuario1.setNome("Carlos Rocha");
-        usuario1.setEmail("carlosrocha.user@gmail.com");
-        usuario1.setSenha("senha456");
-        usuario1.setTipo(tipoCliente);
-
-
+        usuario2.setNome("Carlos Rocha");
+        usuario2.setEmail("carlosrocha.user@gmail.com");
+        usuario2.setSenha("senha456");
+        usuario2.setTipo(tipoCliente);
         pessoaRepository.save(usuario2);
 
-        Chamado chamado1 = registrarChamado("Problema no monitor", "O monitor não liga", 1, LocalDateTime.now(), setorAdmin, statusAguardando, tecnicoLogado, usuario1);
-        Chamado chamado2 = registrarChamado("Problema na impressora", "A impressora não imprime", 2, LocalDateTime.now(), setorTI, statusAguardando, tecnicoLogado, usuario1);
-        Chamado chamado3 = registrarChamado("Problema no teclado", "Algumas teclas não funcionam", 3, LocalDateTime.now(), setorAdmin, statusAguardando, tecnicoLogado, usuario2);
-        Chamado chamado4 = registrarChamado("Problema no mouse", "O mouse está travando", 1, LocalDateTime.now(), setorTI, statusEmAtendimento, tecnicoLogado, usuario2);
-        Chamado chamado5 = registrarChamado("Problema na conexão de rede", "Não consigo me conectar à internet", 2, LocalDateTime.now(), setorTI, statusEmAtendimento, tecnicoLogado, usuario2);
+        registrarChamado("Problema no monitor", "O monitor não liga", 1, LocalDateTime.now(), setorAdmin, statusAguardando, tecnicoLogado, usuario1);
+        registrarChamado("Problema na impressora", "A impressora não imprime", 2, LocalDateTime.now(), setorTI, statusAguardando, tecnicoLogado, usuario1);
+        registrarChamado("Problema no teclado", "Algumas teclas não funcionam", 3, LocalDateTime.now(), setorAdmin, statusAguardando, tecnicoLogado, usuario2);
+        registrarChamado("Problema no mouse", "O mouse está travando", 1, LocalDateTime.now(), setorTI, statusEmAtendimento, tecnicoLogado, usuario2);
+        registrarChamado("Problema na conexão de rede", "Não consigo me conectar à internet", 2, LocalDateTime.now(), setorTI, statusEmAtendimento, tecnicoLogado, usuario2);
     }
 
     public Chamado obterChamadoPorId(int id) {

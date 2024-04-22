@@ -6,7 +6,6 @@ import com.soulcode.demo.repositories.ChamadoRepository;
 import com.soulcode.demo.repositories.StatusRepository;
 import com.soulcode.demo.services.ChamadoService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,19 +29,17 @@ public class TecnicoController {
     @Autowired
     StatusRepository statusRepository;
 
+    private static boolean chamadosForamRegistrados = false;
+
     @GetMapping("/pagina-tecnico")
     public String paginaTecnico(Model model, HttpServletRequest request, @RequestParam(required = false) String status) {
         if ("atualizado".equals(status)) {
             return "redirect:/pagina-tecnico";
         }
 
-        HttpSession session = request.getSession();
-        Boolean chamadosRegistrados = (Boolean) session.getAttribute("chamadosRegistrados");
-        //chamadoService.registrarChamadosFicticios(request);
-
-        if (chamadosRegistrados == null) {
+        if (!chamadosForamRegistrados) {
             chamadoService.registrarChamadosFicticios(request);
-            session.setAttribute("chamadosRegistrados", true);
+            chamadosForamRegistrados = true;
         }
 
         List<Chamado> chamadosDisponiveis = new ArrayList<>();
