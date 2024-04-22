@@ -1,0 +1,38 @@
+package com.soulcode.demo.services;
+
+import com.soulcode.demo.models.Pessoa;
+import com.soulcode.demo.models.Setor;
+import com.soulcode.demo.models.Tipo;
+import com.soulcode.demo.repositories.PessoaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class AutenticacaoService {
+
+    @Autowired
+    private PessoaRepository pessoaRepository;
+
+    public boolean verificarSeOEmailJaExiste(String email) {
+        Pessoa usuarioExistente = pessoaRepository.findByEmail(email);
+        return usuarioExistente != null;
+    }
+
+    public void cadastrarNovoUsuario(String nome, String email, String senha, int tipoId, int setorId) {
+        Pessoa usuario = new Pessoa();
+        usuario.setNome(nome);
+        usuario.setEmail(email);
+        usuario.setSenha(senha);
+
+        Tipo tipo = new Tipo();
+        tipo.setId(tipoId);
+        usuario.setTipo(tipo);
+
+        Setor setor = new Setor();
+        setor.setId(setorId);
+        usuario.setSetor(setor);
+
+        pessoaRepository.save(usuario);
+    }
+
+}

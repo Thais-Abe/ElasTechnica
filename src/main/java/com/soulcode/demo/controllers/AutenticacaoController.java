@@ -1,9 +1,8 @@
 package com.soulcode.demo.controllers;
 
 import com.soulcode.demo.models.Pessoa;
-import com.soulcode.demo.models.Setor;
-import com.soulcode.demo.models.Tipo;
 import com.soulcode.demo.repositories.PessoaRepository;
+import com.soulcode.demo.services.AutenticacaoService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,30 +18,19 @@ public class AutenticacaoController {
     @Autowired
     PessoaRepository pessoaRepository;
 
+    @Autowired
+    AutenticacaoService autenticacaoService;
+
     @RequestMapping(value = "/cadastro-usuario", method = RequestMethod.POST)
     public String save(@RequestParam String nome , @RequestParam String email, String senha, int tipoId, int setorId, Model model) {
 
-        Pessoa userExistente = pessoaRepository.findByEmail(email);
-
-        if (userExistente != null) {
+        if (autenticacaoService.verificarSeOEmailJaExiste(email)) {
             model.addAttribute("error", "Este e-mail já está em uso. Por favor, escolha outro.");
             return "cadastro-usuario";
         }
 
-        Pessoa usuario = new Pessoa();
-        usuario.setNome(nome);
-        usuario.setEmail(email);
-        usuario.setSenha(senha);
+        autenticacaoService.cadastrarNovoUsuario(nome, email, senha, tipoId, setorId);
 
-        Tipo tipo = new Tipo();
-        tipo.setId(tipoId);
-        usuario.setTipo(tipo);
-
-        Setor setor = new Setor();
-        setor.setId(setorId);
-        usuario.setSetor(setor);
-
-        pessoaRepository.save(usuario);
         return "redirect:/login-usuario";
     }
 
