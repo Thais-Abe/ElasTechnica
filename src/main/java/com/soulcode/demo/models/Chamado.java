@@ -2,36 +2,31 @@ package com.soulcode.demo.models;
 
 import jakarta.persistence.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @Entity
-@Table(name = "Chamado")
+@Table(name = "chamado")
 public class Chamado {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
-
     private String Titulo;
-
     private String Descricao;
-
     private int Prioridade;
-
     private LocalDateTime DataInicio;
-
     @ManyToOne
     @JoinColumn(name = "setor_id")
     private Setor Setor;
-
     @ManyToOne
     @JoinColumn(name = "status_id")
     private Status Status;
-
     @ManyToOne
     @JoinColumn(name = "tecnico_id")
     private Pessoa Tecnico;
-
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Pessoa Usuario;
@@ -69,26 +64,30 @@ public class Chamado {
     }
 
     public LocalDateTime getDataInicio() {
-        return DataInicio;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        LocalDateTime dataAtual = LocalDateTime.now();
+        String dataFormatada = dataAtual.format(formatter);
+        LocalDateTime dataConvertida = LocalDateTime.parse(dataFormatada, formatter);
+        return dataConvertida;
     }
 
     public void setDataInicio(LocalDateTime dataInicio) {
         DataInicio = dataInicio;
     }
 
-    public Setor getSetor() {
+    public com.soulcode.demo.models.Setor getSetor() {
         return Setor;
     }
 
-    public void setSetor(Setor setor) {
+    public void setSetor(com.soulcode.demo.models.Setor setor) {
         Setor = setor;
     }
 
-    public Status getStatus() {
+    public com.soulcode.demo.models.Status getStatus() {
         return Status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(com.soulcode.demo.models.Status status) {
         Status = status;
     }
 
@@ -107,13 +106,4 @@ public class Chamado {
     public void setUsuario(Pessoa usuario) {
         Usuario = usuario;
     }
-
-    public String getNomeSolicitante() {
-        if (Usuario != null) {
-            return Usuario.getNome();
-        } else {
-            return null;
-        }
-    }
-
 }

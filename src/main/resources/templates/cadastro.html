@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELAS Technic - Cadastro</title>
+    <link rel="stylesheet" href="./styleCadastro/style.css">
+</head>
+<body>
+<div class="login-container">
+    <img src="./styleCadastro/logo.png">
+    <form action="/submit-cadastro" method="post">
+        <label for="username">Nome:</label>
+        <input type="text" name="username" id="username" required>
+        <label for="username">Email:</label>
+        <input type="text" name="email" id="email" required>
+        <label for="password">Senha:</label>
+        <input type="password" name="password" id="password" required>
+        <label for="password">Confirmar Senha:</label>
+        <input type="password" name="password" id="confirm-password" required>
+        <label for="tipoId">Tipo:</label>
+        <select id="tipoId" name="tipoId">
+            <option value= 2 >Tecnico</option>
+            <option value=1>Cliente</option>
+        </select>
+        <div class="buttons">
+            <button type="submit">Cadastrar</button>
+            <button type="reset">Cancelar</button>
+        </div>
+    </form>
+</div>
+<footer>
+    Ainda farei o footer, mas eu não coloquei o setor pq acho que não faz sentido, já que na hora de criar um chamado nós iremos colocar qual setor o usuário faz parte.
+</footer>
+</body>
+</html>
