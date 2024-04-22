@@ -1,20 +1,32 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"  >
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Esta é a página do detalhe da solicitação</title>
 </head>
 <body>
 
-<h1>Detalhes do chamado: </h1>
+<h1>Detalhes do chamado:</h1>
 
-<label>Nome do solicitante: </label> <span th:text="${nome}"></span>
-<label>Setor: </label> <span th:text="${setor}"></span>
-<label>Data da abertura </label>
-<label>Grau de prioridade: </label> <span th:text="${prioridade}"></span>
-<label>Dados da solicitação: </label> <span th:text="${descricao}"></span>
+<label>Nome do solicitante:</label> <span th:text="${chamado.nomeSolicitante}"></span><br>
+<label>Setor:</label> <span th:text="${chamado.setor.nome}"></span><br>
+<label>Data da abertura:</label> <span th:text="${chamado.dataInicio}"></span><br>
+<label>Grau de prioridade:</label> <span th:text="${chamado.prioridade}"></span><br>
+<label>Dados da solicitação:</label> <span th:text="${chamado.descricao}"></span><br>
 
-<p>Mudar status do chamado</p>
-<button onclick="/pagina-usuario">Voltar</button>
+<form action="/mudar-status" method="post">
+    <input type="hidden" name="id" th:value="${chamado.id}" />
+    <label for="status">Mudar status do chamado:</label>
+    <select name="status" id="status">
+        <option value="em_andamento">Em Andamento</option>
+        <option value="concluido">Concluído</option>
+        <option value="cancelado">Cancelado</option>
+    </select>
+    <button type="submit">Confirmar</button>
+</form>
+
+
+<a th:href="@{/pagina-tecnico}">Voltar</a>
+
 </body>
 </html>

@@ -4,4 +4,5 @@ import com.soulcode.demo.models.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StatusRepository extends JpaRepository<Status, Integer> {
+    Status findByNome(String nome);
 }

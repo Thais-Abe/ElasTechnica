@@ -1,50 +1,85 @@
 package com.soulcode.demo.controllers;
 
+import com.soulcode.demo.models.Chamado;
+import com.soulcode.demo.models.Status;
+import com.soulcode.demo.repositories.ChamadoRepository;
+import com.soulcode.demo.services.ChamadoService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class TecnicoController {
 
-    @GetMapping("/login-tecnico")
-    public String paginaLoginTecnico(){
-        return "login-tecnico";
-    }
+    @Autowired
+    ChamadoRepository chamadoRepository;
+
+    @Autowired
+    ChamadoService chamadoService;
 
     @GetMapping("/pagina-tecnico")
-    public String paginaTecnico(){
+    public String paginaTecnico(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Boolean chamadosRegistrados = (Boolean) session.getAttribute("chamadosRegistrados");
+        //chamadoService.registrarChamadosFicticios(request);
+
+        if (chamadosRegistrados == null || !chamadosRegistrados) {
+            chamadoService.registrarChamadosFicticios(request);
+            session.setAttribute("chamadosRegistrados", true);
+        }
+
+        List<Chamado> chamadosDisponiveis = new ArrayList<>();
+        List<Chamado> chamadosEmAtendimento = new ArrayList<>();
+        List<Chamado> todosChamados = getChamadosFicticiosDoBancoDeDados();
+
+        for (Chamado chamado : todosChamados) {
+            if (chamado.getStatus().getId() == 1) {
+                chamadosDisponiveis.add(chamado);
+            } else if (chamado.getStatus().getId() == 2) {
+                chamadosEmAtendimento.add(chamado);
+            }
+        }
+
+        model.addAttribute("chamadosDisponiveis", chamadosDisponiveis);
+        model.addAttribute("chamadosEmAtendimento", chamadosEmAtendimento);
+
         return "pagina-tecnico";
     }
 
-//    @GetMapping("/pagina-atendente")
-//    public String mostrarPaginaAtendente(@RequestParam("nome") String nomeUsuario, Model model) {
-//        model.addAttribute("nome", nomeUsuario);
-//
-//        // Pedidos em aberto
-//        List<Pedido> pedidosEmAberto = Arrays.asList(
-//                new Pedido("Pedido 1", "Torta de Morango", TipoComida.DOCE, "10/04/2024"),
-//                new Pedido("Pedido 2", "Suco de laranja", TipoComida.BEBIDA, "15/04/2024"),
-//                new Pedido("Pedido 3", "Coxinha de frango", TipoComida.BEBIDA, "23/04/2024"),
-//                new Pedido("Pedido 4", "Torta de frango", TipoComida.SALGADO, "21/04/2024"),
-//                new Pedido("Pedido 5", "Bolo de chocolate", TipoComida.DOCE, "22/04/2024")
-//        );
-//
-//        // Pedidos atribuídos
-//        List<Pedido> pedidosAtribuidos = Arrays.asList(
-//                new Pedido("Pedido 6", "Hambúrguer", TipoComida.SALGADO, "25/04/2024"),
-//                new Pedido("Pedido 7", "Pizza", TipoComida.SALGADO, "26/04/2024")
-//        );
-//
-//        model.addAttribute("pedidosEmAberto", pedidosEmAberto);
-//        model.addAttribute("pedidosAtribuidos", pedidosAtribuidos);
-//
-//        return "pagina-atendente";
-//    }
+    @GetMapping("/detalhes-chamado/{id}")
+    public String detalhesChamado(@PathVariable("id") int id, Model model) {
+        Chamado chamado = chamadoService.obterChamadoPorId(id);
 
+        model.addAttribute("chamado", chamado);
+        model.addAttribute("setor", chamado.getSetor().toString());
+
+        return "detalhes-chamado";
+    }
+
+    @PostMapping("/mudar-status")
+    public String mudarStatusChamado(@RequestParam int id, @RequestParam String status) {
+        Chamado chamado = chamadoService.obterChamadoPorId(id);
+
+        if (status.equals("em_andamento") && chamado.getStatus().getNome().equals("Aguardando Técnico")) {
+            Status novoStatus = chamadoService.obterStatusPorNome("Em atendimento");
+            chamado.setStatus(novoStatus);
+            chamadoService.salvarChamado(chamado);
+        }
+
+        return "redirect:/pagina-tecnico";
+    }
+
+    public List<Chamado> getChamadosFicticiosDoBancoDeDados() {
+        return chamadoRepository.findAll();
+    }
 
 }

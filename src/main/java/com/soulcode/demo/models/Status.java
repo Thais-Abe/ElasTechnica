@@ -9,7 +9,7 @@ public class Status {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
     @Column
-    private String Nome;
+    private String nome;
 
     public int getId() {
         return Id;
@@ -20,10 +20,10 @@ public class Status {
     }
 
     public String getNome() {
-        return Nome;
+        return nome;
     }
 
     public void setNome(String nome) {
-        Nome = nome;
+        nome = nome;
     }
 }

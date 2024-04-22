@@ -1,13 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>Página do Técnico</title>
 </head>
 <body>
-  <h1>Esta é a página do técnico</h1>
-  <label>Chamados em aberto: </label>
-  <a href="/detalhes-chamado">Detalhes do chamado</a>
+
+<h2>Chamados Disponíveis para Atendimento</h2>
+<table>
+  <tr>
+    <th>Título</th>
+    <th>Descrição</th>
+    <th>Prioridade</th>
+    <th>Status</th>
+    <th>Data de Início</th>
+    <th>Detalhes</th>
+  </tr>
+  <tr th:each="chamado : ${chamadosDisponiveis}">
+    <td th:text="${chamado.titulo}"></td>
+    <td th:text="${chamado.descricao}"></td>
+    <td th:text="${chamado.prioridade}"></td>
+    <td th:text="${chamado.status.nome}"></td>
+    <td th:text="${chamado.dataInicio}"></td>
+    <td><a th:href="@{/detalhes-chamado/{id}(id=${chamado.id})}">Detalhes</a></td>
+  </tr>
+</table>
+
+<h2>Chamados em Andamento</h2>
+<table>
+  <tr>
+    <th>Título</th>
+    <th>Descrição</th>
+    <th>Prioridade</th>
+    <th>Status</th>
+    <th>Data de Início</th>
+    <th>Detalhes</th>
+  </tr>
+  <tr th:each="chamado : ${chamadosEmAtendimento}">
+    <td th:text="${chamado.titulo}"></td>
+    <td th:text="${chamado.descricao}"></td>
+    <td th:text="${chamado.prioridade}"></td>
+    <td th:text="${chamado.status.nome}"></td>
+    <td th:text="${chamado.dataInicio}"></td>
+    <td><a th:href="@{/detalhes-chamado/{id}(id=${chamado.id})}">Detalhes</a></td>
+  </tr>
+</table>
 
 </body>
 </html>
