@@ -7,29 +7,27 @@
 <body>
 <h1>Fale conosco! </h1>
 <h2>Caro  <span th:text="${nome}"></span> preencha o formulario abaixo e entraremos em contato o mais breve possível</h2>
-<form action="/detalhes-chamado" method="GET">
-    <label>Nome</label>
-    <input type="text" id="nome" name="nome">
+<form action="/detalhes-chamado" method="POST">
+    <label>Titulo</label>
+    <input id="titulo" name="titulo" type="text"/>
+    <textarea id="descricao" name="descricao">Digite aqui sua solicitação </textarea>
+
     <label>Selecione o setor</label>
     <select id="setor" name="setor">
-        <option>Administrativo</option>
+        <option>Adm</option>
         <option>RH</option>
-        <option>Comercial</option>
-        <option>Opercaional</option>
+        <option>sla</option>
+        <option>teste</option>
     </select>
-    <label>Data da criação do chamado: </label>
-    <input type="date" name="data" id="data">
     <label>Selecione o grau de prioridade:</label>
     <select id="prioridade" name="prioridade">
-        <option>Baixo</option>
-        <option>Médio</option>
-        <option>Alto</option>
-        <option>Urgente</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
     </select>
-    <textarea id="solicitacao" name="solicitacao">Digite aqui sua solicitação </textarea>
     <br/>
-    <label>Email: </label>
-    <input type="text" id="email" name="email">
+    <input type="text" name="nome" id="nome"/>
     <button>Enviar</button>
 </form>
 </body>
