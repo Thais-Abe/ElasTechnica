@@ -3,6 +3,7 @@ package com.soulcode.demo.controllers;
 import com.soulcode.demo.models.Chamado;
 import com.soulcode.demo.models.Status;
 import com.soulcode.demo.repositories.ChamadoRepository;
+import com.soulcode.demo.repositories.StatusRepository;
 import com.soulcode.demo.services.ChamadoService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -26,13 +27,20 @@ public class TecnicoController {
     @Autowired
     ChamadoService chamadoService;
 
+    @Autowired
+    StatusRepository statusRepository;
+
     @GetMapping("/pagina-tecnico")
-    public String paginaTecnico(Model model, HttpServletRequest request) {
+    public String paginaTecnico(Model model, HttpServletRequest request, @RequestParam(required = false) String status) {
+        if ("atualizado".equals(status)) {
+            return "redirect:/pagina-tecnico";
+        }
+
         HttpSession session = request.getSession();
         Boolean chamadosRegistrados = (Boolean) session.getAttribute("chamadosRegistrados");
         //chamadoService.registrarChamadosFicticios(request);
 
-        if (chamadosRegistrados == null || !chamadosRegistrados) {
+        if (chamadosRegistrados == null) {
             chamadoService.registrarChamadosFicticios(request);
             session.setAttribute("chamadosRegistrados", true);
         }
@@ -66,13 +74,17 @@ public class TecnicoController {
     }
 
     @PostMapping("/mudar-status")
-    public String mudarStatusChamado(@RequestParam int id, @RequestParam String status) {
+    public String mudarStatusChamado(@RequestParam int id, @RequestParam int status) {
         Chamado chamado = chamadoService.obterChamadoPorId(id);
 
-        if (status.equals("em_andamento") && chamado.getStatus().getNome().equals("Aguardando Técnico")) {
-            Status novoStatus = chamadoService.obterStatusPorNome("Em atendimento");
-            chamado.setStatus(novoStatus);
-            chamadoService.salvarChamado(chamado);
+        if (status == 1) {
+            Status novoStatus = statusRepository.findById(2).orElse(null);
+            if (novoStatus != null) {
+                chamado.setStatus(novoStatus);
+                chamadoService.salvarChamado(chamado);
+
+                return "redirect:/pagina-tecnico?status=atualizado";
+            }
         }
 
         return "redirect:/pagina-tecnico";

@@ -97,7 +97,4 @@ public class ChamadoService {
         chamadoRepository.save(chamado);
     }
 
-    public Status obterStatusPorNome(String nomeStatus) {
-        return statusRepository.findByNome(nomeStatus);
-    }
 }
