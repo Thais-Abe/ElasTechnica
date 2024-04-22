@@ -41,11 +41,12 @@ public class UsuarioController {
 
     @GetMapping("/detalhes-chamado")
     public String teste5(@RequestParam("nome") String nome, Model model, @RequestParam("setor") String setor, @RequestParam("prioridade") String prioridade, @RequestParam("solicitacao") String solicitacao) {
-        Pessoa usuario = new Pessoa();
-        model.addAttribute("nome", usuario.getNome());
-        model.addAttribute("setor", chamado.getSetor());
-        model.addAttribute("prioridade", chamado.getPrioridade());
-        model.addAttribute("solicitacao", chamado.getDescricao());
+
+        model.addAttribute("nome", nome);
+        model.addAttribute("setor", setor);
+//        model.addAttribute("data", LocalDate.now());
+        model.addAttribute("prioridade", prioridade);
+        model.addAttribute("solicitacao", solicitacao);
         return "detalhes-chamado";
     }
 
