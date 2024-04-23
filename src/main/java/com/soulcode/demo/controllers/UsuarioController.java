@@ -6,6 +6,7 @@ import com.soulcode.demo.models.Setor;
 import com.soulcode.demo.repositories.ChamadoRepository;
 import com.soulcode.demo.repositories.PessoaRepository;
 import com.soulcode.demo.services.ChamadoService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,13 +60,19 @@ public class UsuarioController {
 
         model.addAttribute("chamado", chamado);
 
-
         return "detalhes-chamado-usuario";
     }
 
     @RequestMapping(value = "/detalhes-chamado-usuario", method = RequestMethod.POST)
-    public void salvarSolicitacao( @RequestParam("prioridade") int prioridade, @RequestParam("titulo") String titulo,@RequestParam("descricao") String descricao, @RequestParam("setor") Setor setor){
-         chamado = new Chamado();
+    public String salvarSolicitacao(@RequestParam("prioridade") int prioridade,
+                                    @RequestParam("titulo") String titulo,
+                                    @RequestParam("descricao") String descricao,
+                                    @RequestParam("setor") Setor setor,
+                                    HttpSession session) {
+
+        Pessoa usuarioLogado = (Pessoa) session.getAttribute("usuarioLogado");
+
+        chamado = new Chamado();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime dataAtual = LocalDateTime.now();
         String dataFormatada = dataAtual.format(formatter);
@@ -78,7 +85,7 @@ public class UsuarioController {
         chamado.setDataInicio(dataConvertida);
         chamadoRepository.save(chamado);
 
-//        return "redirect:/pagina-usuario?nome=thais";
+        return "redirect:/pagina-usuario?nome=" + usuarioLogado.getNome();
     }
 
 }

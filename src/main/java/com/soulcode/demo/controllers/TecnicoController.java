@@ -32,10 +32,12 @@ public class TecnicoController {
     private static boolean chamadosForamRegistrados = false;
 
     @GetMapping("/pagina-tecnico")
-    public String paginaTecnico(Model model, HttpServletRequest request, @RequestParam(required = false) String status) {
+    public String paginaTecnico(Model model, HttpServletRequest request, @RequestParam(required = false) String status, @RequestParam(required = false) String nome) {
         if ("atualizado".equals(status)) {
             return "redirect:/pagina-tecnico";
         }
+
+        model.addAttribute("nome", nome);
 
         if (!chamadosForamRegistrados) {
             chamadoService.registrarChamadosFicticios(request);
