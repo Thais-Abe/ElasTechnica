@@ -1,7 +1,6 @@
 package com.soulcode.demo.services;
 
 import com.soulcode.demo.models.Pessoa;
-import com.soulcode.demo.models.Setor;
 import com.soulcode.demo.models.Tipo;
 import com.soulcode.demo.repositories.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
