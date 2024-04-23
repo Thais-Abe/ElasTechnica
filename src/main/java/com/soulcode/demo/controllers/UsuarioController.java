@@ -24,6 +24,7 @@ public class UsuarioController {
     @Autowired
     PessoaRepository pessoaRepository;
 
+
     Chamado chamado = new Chamado();
     Setor setor = new Setor();
 
@@ -63,27 +64,21 @@ public class UsuarioController {
     }
 
     @RequestMapping(value = "/detalhes-chamado-usuario", method = RequestMethod.POST)
-    public String salvarSolicitacao(@RequestParam("setor") Setor setor, @RequestParam("prioridade") int prioridade, @RequestParam("descricao") String descricao, @RequestParam("nome") String nome){
+    public void salvarSolicitacao( @RequestParam("prioridade") int prioridade, @RequestParam("titulo") String titulo,@RequestParam("descricao") String descricao, @RequestParam("setor") Setor setor){
          chamado = new Chamado();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime dataAtual = LocalDateTime.now();
         String dataFormatada = dataAtual.format(formatter);
         LocalDateTime dataConvertida = LocalDateTime.parse(dataFormatada, formatter);
-//        chamado.setSetor(setor);
-        Pessoa usuario = pessoaRepository.findByNome(nome);
 
-//        Setor
-//       this.setor.setNome(setor);
-//       int idSetor = this.setor.getId();
-//        if(chamado.getSetor().equals(idSetor)){
-//
-//        }
-        chamado.setSetor(setor);
         chamado.setDescricao(descricao);
+        chamado.setTitulo(titulo);
+        chamado.setSetor(setor);
         chamado.setPrioridade(prioridade);
         chamado.setDataInicio(dataConvertida);
         chamadoRepository.save(chamado);
-        return "redirect:/pagina-usuario?nome=" + usuario.getNome();
+
+//        return "redirect:/pagina-usuario?nome=thais";
     }
 
 }

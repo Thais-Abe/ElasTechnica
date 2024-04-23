@@ -33,32 +33,36 @@
                                 <label>Solicitante: <span th:text="${nome}"></span></label>
                                 <label>Setor:</label>
                                 <select class="select" id="setor" name="setor">
-                                    <option selected>Selecione</option>
-                                    <option value="adm">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                    <option value="">4</option>
-                                    <option value="">5</option>
-                                    <option value="">6</option>
+                                    <option selected></option>
+                                    <option value="1">Adm</option>
+                                    <option value="2">rh</option>
+                                    <option value="3">tecnico</option>
+                                    <option value="4">yuyu</option>
+                                    <option value="5">saude</option>
+                                    <option value="6">sla</option>
                                 </select>
                                 <div class="input-prioridade">
                                     <label>Grau de prioridade:</label>
                                     <select class="select" id="prioridade" name="prioridade">
                                         <option selected>Selecione</option>
-                                        <option value="">Baixo</option>
-                                        <option value="">Médio</option>
-                                        <option value="">Alto</option>
-                                        <option value="">Urgente</option>
+                                        <option value=1>1</option>
+                                        <option value=2>2</option>
+                                        <option value=3>3</option>
+                                        <option value=4>4</option>
                                     </select>
                                 </div>
+                                <div>
+                                    <label class="titulo">Titulo: </label>
+                                    <input type="text" id="titulo" name="titulo"/>
+                                </div>
+                                <div>
+                                    <label class="descricao"  >Descrição: </label>
+                                    <textarea class="textarea" id="descricao" name="descricao"></textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit"  class="btn-enviar" data-dismiss="modal fade" onclick="voltarPaginaUsuario" >Enviar</button>
+                                </div>
                             </form>
-                            <div>
-                                <label class="descricao"  >Descrição: </label>
-                                <textarea class="textarea" id="descricao" name="descricao"></textarea>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit"  class="btn-enviar" data-dismiss="modal fade" >Enviar</button>
                         </div>
                     </div>
                 </div>
@@ -99,13 +103,12 @@
     </div>
 </section>
 <script>
-function voltarPaginaUsuario(nome){
+function voltarPaginaUsuario(){
     const urlParams = new URLSearchParams(window.location.search);
     const nome = urlParams.get('nome');
     $('#staticBackdrop').modal('hide');
     window.location.href = '/pagina-usuario?nome=' + nome;
     }
-
 
 </script>
 </body>
