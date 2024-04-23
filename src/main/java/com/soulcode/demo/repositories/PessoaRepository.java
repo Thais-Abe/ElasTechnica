@@ -8,4 +8,7 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Integer> {
 
         @Query("SELECT p FROM Pessoa p WHERE p.Email = :email")
         Pessoa findByEmail(String email);
+
+        @Query("SELECT p FROM Pessoa p WHERE p.Nome = :nome")
+        Pessoa findByNome(String nome);
 }

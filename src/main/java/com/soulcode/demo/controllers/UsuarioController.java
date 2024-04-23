@@ -1,11 +1,35 @@
 package com.soulcode.demo.controllers;
 
+import com.soulcode.demo.models.Chamado;
+import com.soulcode.demo.models.Pessoa;
+import com.soulcode.demo.models.Setor;
+import com.soulcode.demo.repositories.ChamadoRepository;
+import com.soulcode.demo.repositories.PessoaRepository;
+import com.soulcode.demo.services.ChamadoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Controller
 public class UsuarioController {
+
+    @Autowired
+    private final ChamadoRepository chamadoRepository;
+    @Autowired
+    ChamadoService chamadoService;
+    @Autowired
+    PessoaRepository pessoaRepository;
+
+    Chamado chamado = new Chamado();
+    Setor setor = new Setor();
+
+    public UsuarioController(ChamadoRepository chamadoRepository) {
+        this.chamadoRepository = chamadoRepository;
+    }
 
     @GetMapping("/login-usuario")
     public String paginaLoginUsuario() {
@@ -26,6 +50,40 @@ public class UsuarioController {
     @GetMapping("/cadastro-usuario")
     public String criarUsuario() {
         return "cadastro-usuario";
+    }
+
+    @GetMapping("/detalhes-chamado-usuario/{Id}")
+    public String detalhesChamadousuario(@PathVariable("Id") int id, Model model) {
+        Chamado chamado = chamadoService.obterChamadoPorId(id);
+
+        model.addAttribute("chamado", chamado);
+
+
+        return "detalhes-chamado-usuario";
+    }
+
+    @RequestMapping(value = "/detalhes-chamado-usuario", method = RequestMethod.POST)
+    public String salvarSolicitacao(@RequestParam("setor") Setor setor, @RequestParam("prioridade") int prioridade, @RequestParam("descricao") String descricao, @RequestParam("nome") String nome){
+         chamado = new Chamado();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        LocalDateTime dataAtual = LocalDateTime.now();
+        String dataFormatada = dataAtual.format(formatter);
+        LocalDateTime dataConvertida = LocalDateTime.parse(dataFormatada, formatter);
+//        chamado.setSetor(setor);
+        Pessoa usuario = pessoaRepository.findByNome(nome);
+
+//        Setor
+//       this.setor.setNome(setor);
+//       int idSetor = this.setor.getId();
+//        if(chamado.getSetor().equals(idSetor)){
+//
+//        }
+        chamado.setSetor(setor);
+        chamado.setDescricao(descricao);
+        chamado.setPrioridade(prioridade);
+        chamado.setDataInicio(dataConvertida);
+        chamadoRepository.save(chamado);
+        return "redirect:/pagina-usuario?nome=" + usuario.getNome();
     }
 
 }
