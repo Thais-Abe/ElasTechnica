@@ -11,7 +11,7 @@ atendimento e técnicos assumam esses chamados, realizando o atendimento e modif
 
 ## Telas e Funcionalidades
 - Tela Inicial
-  - A tela inicial apresenta dois botões: um para realizar loguin e outro para cadastrar.
+  - A tela inicial apresenta dois botões: um para realizar login e outro para cadastrar.
   - Ao clicar em um dos links, o usuário é redirecionado para a página de login correspondente.
 - Tela de Login
   - A tela de login possui 2 inputs para email e senha e 2 botões para entrar e voltar.
@@ -27,7 +27,7 @@ atendimento e técnicos assumam esses chamados, realizando o atendimento e modif
   - Na tela do técnico, ele pode visualizar os chamados disponíveis para serem atendidos e os chamados atribuídos a ele.
   - Ao clicar em um chamado, o técnico pode visualizar as informações detalhadas e modificar o status do chamado para "Aguardando técnico", "Em atendimento", "Escalado para outro setor" ou "Finalizado".
 ## DER do banco de dados
-![Imagem do der do banco de dados](https://i.imgur.com/5VA6JWh.png)
+![Imagem do der do banco de dados](https://i.imgur.com/LXwHaaX.png)
 ## Como Executar o Projeto
 - Clone o repositório do projeto para o seu ambiente de desenvolvimento.
 - Certifique-se de ter o Java e o Spring Framework instalados em sua máquina.
