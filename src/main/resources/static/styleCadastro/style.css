@@ -26,7 +26,6 @@ body {
         width: 30px;
         border-radius: 15px;
         color: 4B8DAB;
-
     }
 }
 
@@ -61,8 +60,28 @@ body {
     .btn-login:hover, .btn-cadastro:hover {
         background-color: #E0EDF0;
     }
-
 }
+
+.btn-logar {
+    display: flex;
+    justify-content: center;
+
+    button {
+        margin: 10px;
+        padding: 15px 25px;
+        background-color: #6FA7BC;
+        color: #ffff;
+        text-decoration: none;
+        border: solid 2px #4B8DAB;
+        border-radius: 8px;
+        text-align: center;
+    }
+    button:hover {
+        background-color: #E0EDF0;
+    }
+}
+
+
 
 img {
     width: 80%;
