@@ -1,11 +1,67 @@
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Montserrat', sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: #FDF5E6;
+}
+
+.brand {
+    h1 {
+        font-size: 5em;
+        color: #fff;
+        -webkit-text-stroke: 1px #4B8DAB;
+    }
+
+    span {
+        margin-right: 5px;
+        font-weight: bold;
+        color: #4B8DAB;
+        padding: 2px;
+        border-style: solid;
+        border-color: #4B8DAB;
+        border-radius: 2px;
+        width: 30px;
+        border-radius: 15px;
+        color: 4B8DAB;
+
+    }
+}
+
+.title-home{
+    color: #8A8A8A;
+    margin-top: 30px;
+
+    h1, h2 {
+        font-size: 2em;
+        font-weight: normal;
+        margin: 5px;
+    }
+
+}
+
+.btn-home {
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+
+    .btn-login, .btn-cadastro {
+       font-size: 1.5em;
+       margin: 10px;
+       padding: 15px 25px;
+       background-color: #FFFF;
+       color: #4B8DAB;
+       text-decoration: none;
+       border: solid 2px #BAE3EA;
+       border-radius: 8px;
+       text-align: center;
+    }
+    .btn-login:hover, .btn-cadastro:hover {
+        background-color: #E0EDF0;
+    }
+
 }
 
 img {
@@ -95,11 +151,12 @@ button[type="reset"]:hover {
 }
 
 footer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    margin: 0;
     width: 100%;
+    height: 100px;
+    position: absolute;
+    bottom: 0;
+    align-items: center;
     background-color: #4B8DAB;
     color: #FFFFFF;
     padding: 5px 0;
@@ -107,7 +164,7 @@ footer {
 
 .github-primeiro {
     display: flex;
-    margin: 10px;
+    margin: 10px 0;
     justify-content: space-evenly;
     width: 100%;
 }
