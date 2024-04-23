@@ -157,3 +157,27 @@ section{
     display: flex;
     align-self: flex-end;
 }
+
+.modal-details {
+
+    .modal-details-title {
+        color: #4B8DAB;
+        font-size: 25px;
+        margin-left: 35px;
+    }
+
+    .modal-details-infos {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        h4 {
+            margin: 10px;
+        }
+
+        span {
+            font-weight: normal;
+        }
+    }
+}
+
