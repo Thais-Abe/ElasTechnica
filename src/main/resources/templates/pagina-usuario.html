@@ -31,7 +31,7 @@
                                         <div class="modal-body">
                                             <form class="form" action="/detalhes-chamado-usuario" method="post">
                                                 <div class="modal-header">
-                                                    <input name="titulo" class="title-chamado" id="staticBackdropLabel" placeholder="Título do Chamado"/>
+                                                    <input class="title-chamado" id="staticBackdropLabel" name="titulo" placeholder="Título do Chamado"/>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="infos-chamado">
@@ -43,7 +43,7 @@
                                                             <option value="3">Recursos Humanos</option>
                                                             <option value="4">Comercial</option>
                                                             <option value="5">Operacional</option>
-                                                            <option value="6">Tecnologia da Informação</option>
+                                                            <option value="6">Tecnologia de Informação</option>
                                                         </select>
                                                     </label>
                                                     <div class="input-prioridade">
@@ -60,10 +60,10 @@
                                                 <div class="container-descricao">
                                                     <div>
                                                         <label class="descricao">Descrição: </label>
-                                                        <textarea class="textarea"></textarea>
+                                                        <textarea class="textarea" id="descricao" name="descricao"></textarea>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="submit" class="btn-enviar" data-dismiss="modal fade" onclick="voltarPaginaUsuario()">Enviar</button>
+                                                        <button type="submit" class="btn-enviar">Enviar</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -77,20 +77,11 @@
                     <table class="table">
                         <tbody>
                             <tr>
-                                <th>Título</th>
-                                <th>Descrição</th>
-                                <th>Prioridade</th>
-                                <th>Data de Início</th>
-                                <th>Status</th>
-                                <th>Detalhes</th>
-                            </tr>
-                            <tr th:each="chamado, row : ${chamadosDisponiveis}">
-                                <td th:text="${chamado.titulo}"></td>
-                                <td th:text="${chamado.descricao}"></td>
-                                <td th:text="${chamado.prioridade}"></td>
-                                <td th:text="${chamado.dataInicio}"></td>
-                                <td> campo vazio por enquanto</td>
-                                <td><a th:href="@{/detalhes-chamado-usuario/{id}(id=${chamado.id})}">Detalhes</a></td>
+                                <th scope="row">Data<td>22/04</td></th>
+                                <th scope="row">Nome<td>22/04</td></th>
+                                <th scope="row">Setor<td>22/04</td></th>
+                                <th scope="row">Grau de prioridade<td>22/04</td></th>
+                                <th scope="row">Status<td>22/04</td></th>
                             </tr>
                         </tbody>
                     </table>
@@ -108,28 +99,12 @@
                     <table class="table">
                         <tbody>
                         <tr>
-                            <th>Título</th>
-                            <th>Descrição</th>
-                            <th>Prioridade</th>
-                            <th>Data de Início</th>
-                            <th>Status</th>
-                            <th>Detalhes</th>
+                            <th scope="row">Data<td>22/04</td></th>
+                            <th scope="row">Nome<td>Giselle</td></th>
+                            <th scope="row">Setor<td>Administrativo</td></th>
+                            <th scope="row">Grau de prioridade<td>Baixo</td></th>
+                            <th scope="row">Status<td>Pendente</td></th>
                         </tr>
-                        <tr th:each="chamado, row : ${chamadosDisponiveis}">
-                            <td th:text="${chamado.titulo}"></td>
-                            <td th:text="${chamado.descricao}"></td>
-                            <td th:text="${chamado.prioridade}"></td>
-                            <td th:text="${chamado.dataInicio}"></td>
-                            <td> campo vazio por enquanto</td>
-                            <td><a th:href="@{/detalhes-chamado-usuario/{id}(id=${chamado.id})}">Detalhes</a></td>
-                        </tr>
-                        <script>
-                            function voltarPaginaUsuario(){
-                                const urlParams = new URLSearchParams(window.location.search);
-                                const nome = urlParams.get('nome');
-                                window.location.href = '/pagina-usuario?nome=' + nome;
-                            }
-                        </script>
                         </tbody>
                     </table>
                 </div>
@@ -174,6 +149,7 @@
                 </div>
             </div>
         </footer>
+
     </body>
 </html>
 

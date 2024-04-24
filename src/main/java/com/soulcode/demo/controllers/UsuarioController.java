@@ -23,11 +23,12 @@ public class UsuarioController {
 
     @Autowired
     private final ChamadoRepository chamadoRepository;
+
     @Autowired
     ChamadoService chamadoService;
+
     @Autowired
     PessoaRepository pessoaRepository;
-
 
     Chamado chamado = new Chamado();
     Setor setor = new Setor();
