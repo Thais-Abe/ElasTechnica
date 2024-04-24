@@ -83,6 +83,7 @@ public class UsuarioController {
         chamado.setSetor(setor);
         chamado.setPrioridade(prioridade);
         chamado.setDataInicio(dataConvertida);
+        chamado.setUsuario(usuarioLogado);
         chamadoRepository.save(chamado);
 
         return "redirect:/pagina-usuario?nome=" + usuarioLogado.getNome();
