@@ -116,7 +116,7 @@
 
                         </tr>
                         </tr>
-                        <tr th:each="chamado, row: ${chamadosDisponiveis}">
+                        <tr th:each="chamado, row: ${chamadosEmAberto}">
                             <td th:text="${chamado.titulo}"></td>
                             <td th:text="${chamado.descricao}"></td>
                             <td th:text="${chamado.prioridade}"></td>

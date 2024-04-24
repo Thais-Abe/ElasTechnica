@@ -95,10 +95,19 @@ public class UsuarioController {
     @GetMapping("/pagina-usuario")
     public String paginaUsuario( @RequestParam("nome") String nome, Model model) {
 
-        List<Chamado> chamadosDisponiveis = chamadoRepository.findAll();
+        List<Chamado> todosOsChamados = chamadoRepository.findAll();
+        List<Chamado> chamadosDisponiveis = new ArrayList<>();
+        List<Chamado> chamadosEmAberto = new ArrayList<>();
 
-        model.addAttribute("chamadosDisponiveis", chamadosDisponiveis);
+        for (Chamado chamado : todosOsChamados) {
+            int statusId = chamado.getStatus().getId();
+            (statusId == 1 ? chamadosDisponiveis : chamadosEmAberto).add(chamado);
+        }
+
+        model.addAttribute("chamadosDisponiveis", todosOsChamados);
+        model.addAttribute("chamadosEmAberto", chamadosEmAberto);
         model.addAttribute("nome", nome);
+
         return "pagina-usuario";
     }
 
