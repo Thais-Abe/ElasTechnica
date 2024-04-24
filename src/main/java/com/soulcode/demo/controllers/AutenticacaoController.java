@@ -22,10 +22,15 @@ public class AutenticacaoController {
     AutenticacaoService autenticacaoService;
 
     @RequestMapping(value = "/cadastro-usuario", method = RequestMethod.POST)
-    public String save(@RequestParam String nome , @RequestParam String email, String senha, int tipoId, Model model) {
+    public String save(@RequestParam String nome, @RequestParam String email, @RequestParam String senha, @RequestParam String confirmSenha, @RequestParam int tipoId, Model model) {
 
         if (autenticacaoService.verificarSeOEmailJaExiste(email)) {
             model.addAttribute("error", "Este e-mail já está em uso. Por favor, escolha outro.");
+            return "cadastro-usuario";
+        }
+
+        if (!autenticacaoService.confirmarSenha(senha, confirmSenha)) {
+            model.addAttribute("error", "As senhas não correspondem.");
             return "cadastro-usuario";
         }
 

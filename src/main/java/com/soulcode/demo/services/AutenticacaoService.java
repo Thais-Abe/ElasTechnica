@@ -12,11 +12,6 @@ public class AutenticacaoService {
     @Autowired
     private PessoaRepository pessoaRepository;
 
-    public boolean verificarSeOEmailJaExiste(String email) {
-        Pessoa usuarioExistente = pessoaRepository.findByEmail(email);
-        return usuarioExistente != null;
-    }
-
     public void cadastrarNovoUsuario(String nome, String email, String senha, int tipoId) {
         Pessoa usuario = new Pessoa();
         usuario.setNome(nome);
@@ -29,5 +24,15 @@ public class AutenticacaoService {
 
         pessoaRepository.save(usuario);
     }
+
+    public boolean verificarSeOEmailJaExiste(String email) {
+        Pessoa usuarioExistente = pessoaRepository.findByEmail(email);
+        return usuarioExistente != null;
+    }
+
+    public boolean confirmarSenha(String senha, String confirmSenha) {
+        return senha.equals(confirmSenha);
+    }
+
 
 }
