@@ -5,9 +5,8 @@ import com.soulcode.demo.models.Pessoa;
 import com.soulcode.demo.models.Setor;
 import com.soulcode.demo.models.Status;
 import com.soulcode.demo.repositories.ChamadoRepository;
-import com.soulcode.demo.repositories.PessoaRepository;
 import com.soulcode.demo.services.ChamadoService;
-import jakarta.servlet.http.HttpServletRequest;
+
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,7 +87,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/pagina-usuario")
-    public String paginaUsuario(Model model, HttpServletRequest request, @RequestParam(required = false) String status, @RequestParam("nome") String nome) {
+    public String paginaUsuario(Model model,  @RequestParam("nome") String nome) {
 
         List<Chamado> todosChamados = chamadoRepository.findAll();
         List<Chamado> chamadosEncerrados = new ArrayList<>();

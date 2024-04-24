@@ -8,16 +8,13 @@
 
 <h1>Detalhes do chamado:</h1>
 <form action="/pagina-usuario" method="GET">
-    <label>Nome</label><span th:text="${chamado.getUsuario()}"></span><br>
-    <label>Data da abertura:</label> <span th:text="${chamado.DataInicio}"></span><br>
-    <label>Grau de prioridade:</label> <span th:text="${chamado.Prioridade}"></span><br>
-    <label>Dados da solicitação:</label> <span th:text="${chamado.Descricao}"></span><br>
+    <p><strong>Nome:</strong> <span th:text="${chamado.getUsuario()}"></span></p>
+    <p><strong>Data da Abertura:</strong> <span th:text="${chamado.DataInicio}"></span></p>
+    <p><strong>Grau de Prioridade:</strong> <span th:text="${chamado.Prioridade}"></span></p>
+    <p><strong>Dados da Solicitação:</strong> <span th:text="${chamado.Descricao}"></span></p>
 
     <button type="submit">Voltar</button>
 </form>
-
-
-
 
 </body>
 </html>
