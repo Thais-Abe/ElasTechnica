@@ -29,41 +29,41 @@
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-body">
-                                            <form class="form">
+                                            <form class="form" action="/detalhes-chamado-usuario" method="post">
                                                 <div class="modal-header">
-                                                    <input class="title-chamado" id="staticBackdropLabel" placeholder="Título do Chamado"/>
+                                                    <input class="title-chamado" id="staticBackdropLabel" name="titulo" placeholder="Título do Chamado"/>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="infos-chamado">
                                                     <label>Solicitante: <span th:text="${nome}"></span></label>
                                                     <label>Setor:
                                                         <select class="select" id="setor" name="setor">
-                                                            <option>Administrativo</option>
-                                                            <option>Financeiro</option>
-                                                            <option>Recursos Humanos</option>
-                                                            <option>Comercial</option>
-                                                            <option>Operacional</option>
-                                                            <option>Tecnologia da Informação</option>
+                                                            <option value="1">Administrativo</option>
+                                                            <option value="2">Financeiro</option>
+                                                            <option value="3">Recursos Humanos</option>
+                                                            <option value="4">Comercial</option>
+                                                            <option value="5">Operacional</option>
+                                                            <option value="6">Tecnologia de Informação</option>
                                                         </select>
                                                     </label>
                                                     <div class="input-prioridade">
                                                         <label>Grau de prioridade:</label>
                                                         <select class="select" id="prioridade" name="prioridade">
                                                             <option selected>Selecione</option>
-                                                            <option value="">Baixo</option>
-                                                            <option value="">Médio</option>
-                                                            <option value="">Alto</option>
-                                                            <option value="">Urgente</option>
+                                                            <option value="1">Baixo</option>
+                                                            <option value="2">Médio</option>
+                                                            <option value="3">Alto</option>
+                                                            <option value="4">Urgente</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="container-descricao">
                                                     <div>
                                                         <label class="descricao">Descrição: </label>
-                                                        <textarea class="textarea"></textarea>
+                                                        <textarea class="textarea" id="descricao" name="descricao"></textarea>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn-enviar">Enviar</button>
+                                                        <button type="submit" class="btn-enviar">Enviar</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -149,6 +149,7 @@
                 </div>
             </div>
         </footer>
+
     </body>
 </html>
 
