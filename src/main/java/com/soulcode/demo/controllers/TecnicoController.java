@@ -42,11 +42,8 @@ public class TecnicoController {
         List<Chamado> todosChamados = getChamadosFicticiosDoBancoDeDados();
 
         for (Chamado chamado : todosChamados) {
-            if (chamado.getStatus().getId() == 1) {
-                chamadosDisponiveis.add(chamado);
-            } else if (chamado.getStatus().getId() == 2 || chamado.getStatus().getId() == 3 || chamado.getStatus().getId() == 4) {
-                chamadosEmAtendimento.add(chamado);
-            }
+            int statusId = chamado.getStatus().getId();
+            (statusId == 1 ? chamadosDisponiveis : chamadosEmAtendimento).add(chamado);
         }
 
         List<Chamado> chamadosDoBancoComStatusInicial = chamadoService.getChamadosComStatus(1);
@@ -74,7 +71,7 @@ public class TecnicoController {
     }
 
     @RequestMapping(value = "/mudar-status", method = RequestMethod.POST)
-    public String mudarStatusChamado(@RequestParam(required = false) String nome, @RequestParam int id, @RequestParam int status, HttpServletRequest request, HttpSession session) {
+    public String mudarStatusChamado(@RequestParam int id, @RequestParam int status, HttpSession session) {
 
         Chamado chamado = chamadoService.obterChamadoPorId(id);
         Pessoa tecnicoLogado = (Pessoa) session.getAttribute("usuarioLogado");

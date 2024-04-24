@@ -57,9 +57,6 @@ public class ChamadoService {
         Status statusAguardando = new Status();
         statusAguardando.setId(1);
 
-        Status statusEmAtendimento = new Status();
-        statusEmAtendimento.setId(2);
-
         Tipo tipoCliente = new Tipo();
         tipoCliente.setId(1);
 
