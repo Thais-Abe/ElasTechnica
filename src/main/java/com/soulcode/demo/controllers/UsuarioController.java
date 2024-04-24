@@ -3,6 +3,7 @@ package com.soulcode.demo.controllers;
 import com.soulcode.demo.models.Chamado;
 import com.soulcode.demo.models.Pessoa;
 import com.soulcode.demo.models.Setor;
+import com.soulcode.demo.models.Status;
 import com.soulcode.demo.repositories.ChamadoRepository;
 import com.soulcode.demo.repositories.PessoaRepository;
 import com.soulcode.demo.services.ChamadoService;
@@ -28,6 +29,7 @@ public class UsuarioController {
 
     Chamado chamado = new Chamado();
     Setor setor = new Setor();
+    Status statusInicial = new Status();
 
     public UsuarioController(ChamadoRepository chamadoRepository) {
         this.chamadoRepository = chamadoRepository;
@@ -78,12 +80,15 @@ public class UsuarioController {
         String dataFormatada = dataAtual.format(formatter);
         LocalDateTime dataConvertida = LocalDateTime.parse(dataFormatada, formatter);
 
+        statusInicial.setId(1);
+
         chamado.setDescricao(descricao);
         chamado.setTitulo(titulo);
         chamado.setSetor(setor);
         chamado.setPrioridade(prioridade);
         chamado.setDataInicio(dataConvertida);
         chamado.setUsuario(usuarioLogado);
+        chamado.setStatus(statusInicial);
         chamadoRepository.save(chamado);
 
         return "redirect:/pagina-usuario?nome=" + usuarioLogado.getNome();
