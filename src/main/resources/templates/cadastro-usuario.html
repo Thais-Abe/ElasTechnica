@@ -10,7 +10,9 @@
 <body>
     <div class="login-container">
         <img th:src="@{/img/logo.png}">
-
+        <div th:if="${error}" style="color: red;">
+            <p th:text="${error}"></p>
+        </div>
         <form action="/cadastro-usuario" method="post">
             <label for="nome">Nome:</label>
             <input type="text" name="nome" id="nome" required>

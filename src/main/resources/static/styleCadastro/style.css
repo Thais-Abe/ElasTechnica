@@ -117,7 +117,7 @@ label {
     font-weight: 600;
 }
 
-input[type="text"], input[type="password"] {
+input[type="text"], input[type="password"], input[type="email"] {
     padding: 8px;
     border-radius: 5px;
     border: 1px solid #ccc;
