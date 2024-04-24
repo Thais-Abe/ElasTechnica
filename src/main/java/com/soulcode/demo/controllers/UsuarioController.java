@@ -6,6 +6,7 @@ import com.soulcode.demo.models.Setor;
 import com.soulcode.demo.repositories.ChamadoRepository;
 import com.soulcode.demo.repositories.PessoaRepository;
 import com.soulcode.demo.services.ChamadoService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Controller
 public class UsuarioController {
@@ -37,11 +39,11 @@ public class UsuarioController {
         return "login-usuario";
     }
 
-    @GetMapping("/pagina-usuario")
-    public String paginaUsuario(@RequestParam("nome") String nome, Model model) {
-        model.addAttribute("nome", nome);
-        return "pagina-usuario";
-    }
+//    @GetMapping("/pagina-usuario")
+//    public String paginaUsuario(@RequestParam("nome") String nome, Model model) {
+//        model.addAttribute("nome", nome);
+//        return "pagina-usuario";
+//    }
 
     @GetMapping("/abertura-chamado")
     public String paginaAberturaChamado() {
@@ -64,7 +66,7 @@ public class UsuarioController {
     }
 
     @RequestMapping(value = "/detalhes-chamado-usuario", method = RequestMethod.POST)
-    public void salvarSolicitacao( @RequestParam("prioridade") int prioridade, @RequestParam("titulo") String titulo,@RequestParam("descricao") String descricao, @RequestParam("setor") Setor setor){
+    public String salvarSolicitacao( @RequestParam("prioridade") int prioridade, @RequestParam("titulo") String titulo,@RequestParam("descricao") String descricao, @RequestParam("setor") Setor setor){
          chamado = new Chamado();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime dataAtual = LocalDateTime.now();
@@ -78,7 +80,21 @@ public class UsuarioController {
         chamado.setDataInicio(dataConvertida);
         chamadoRepository.save(chamado);
 
-//        return "redirect:/pagina-usuario?nome=thais";
+        return "redirect:/pagina-usuario?nome=thais";
     }
 
+        private static boolean chamadosForamRegistrados = false;
+    @GetMapping("/pagina-usuario")
+    public String paginaUsuario(Model model, HttpServletRequest request, @RequestParam(required = false) String status, @RequestParam("nome") String nome) {
+
+        List<Chamado> chamadosDisponiveis = chamadoRepository.findAll();
+        List<Chamado> chamadosEmAtendimento = chamadoRepository.findAll();
+
+        model.addAttribute("chamadosDisponiveis", chamadosDisponiveis);
+        model.addAttribute("chamadosEmAtendimento", chamadosDisponiveis);
+        model.addAttribute("nome", nome);
+        return "pagina-usuario";
+    }
 }
+
+

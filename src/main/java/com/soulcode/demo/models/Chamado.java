@@ -69,11 +69,7 @@ public class Chamado {
     }
 
     public LocalDateTime getDataInicio() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        LocalDateTime dataAtual = LocalDateTime.now();
-        String dataFormatada = dataAtual.format(formatter);
-        LocalDateTime dataConvertida = LocalDateTime.parse(dataFormatada, formatter);
-        return dataConvertida;
+        return DataInicio;
     }
 
     public void setDataInicio(LocalDateTime dataInicio) {

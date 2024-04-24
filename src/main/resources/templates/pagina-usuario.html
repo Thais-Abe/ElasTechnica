@@ -60,7 +60,7 @@
                                     <textarea class="textarea" id="descricao" name="descricao"></textarea>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit"  class="btn-enviar" data-dismiss="modal fade" onclick="voltarPaginaUsuario" >Enviar</button>
+                                    <button type="submit"  class="btn-enviar" data-dismiss="modal fade" onclick="voltarPaginaUsuario()" >Enviar</button>
                                 </div>
                             </form>
                         </div>
@@ -71,15 +71,25 @@
         </div>
     </div>
     <div class="div-table">
-        <table class="table">
             <tbody>
-            <tr>
-                <th scope="row">Data<td>22/04</td></th>
-                <th scope="row">Nome<td>22/04</td></th>
-                <th scope="row">Setor<td>22/04</td></th>
-                <th scope="row">Grau de prioridade<td>22/04</td></th>
-                <th scope="row">Status<td>22/04</td></th>
-            </tr>
+            <table>
+                <tr>
+                    <th>Título</th>
+                    <th>Descrição</th>
+                    <th>Prioridade</th>
+                    <th>Data de Início</th>
+                    <th>Status</th>
+                    <th>Detalhes</th>
+                </tr>
+                <tr th:each="chamado, row : ${chamadosDisponiveis}">
+                    <td th:text="${chamado.titulo}"></td>
+                    <td th:text="${chamado.descricao}"></td>
+                    <td th:text="${chamado.prioridade}"></td>
+                    <td th:text="${chamado.dataInicio}"></td>
+                    <td> campo vazio por enquanto</td>
+                    <td><a th:href="@{/detalhes-chamado-usuario/{id}(id=${chamado.id})}">Detalhes</a></td>
+                </tr>
+            </table>
             </tbody>
         </table>
     </div>
@@ -89,15 +99,24 @@
         <h2 class="h2">Chamados encerrados</h2>
     </div>
     <div class="div-table">
-        <table class="table">
-            <tbody>
-            <tr>
-                <th scope="row">Data<td>22/04</td></th>
-                <th scope="row">Nome<td>Giselle</td></th>
-                <th scope="row">Setor<td>Administrativo</td></th>
-                <th scope="row">Grau de prioridade<td>Baixo</td></th>
-                <th scope="row">Status<td>Pendente</td></th>
-            </tr>
+            <table>
+                <tr>
+                    <th>Título</th>
+                    <th>Descrição</th>
+                    <th>Prioridade</th>
+                    <th>Data de Início</th>
+                    <th>Status</th>
+                    <th>Detalhes</th>
+                </tr>
+                <tr th:each="chamado : ${chamadosDisponiveis}">
+                    <td th:text="${chamado.titulo}"></td>
+                    <td th:text="${chamado.descricao}"></td>
+                    <td th:text="${chamado.prioridade}"></td>
+                    <td th:text="${chamado.dataInicio}"></td>
+                    <td> campo vazio por enquanto</td>
+                    <td><a th:href="@{/detalhes-chamado-usuario/{id}(id=${chamado.id})}">Detalhes</a></td>
+                </tr>
+            </table>
             </tbody>
         </table>
     </div>
@@ -106,7 +125,6 @@
 function voltarPaginaUsuario(){
     const urlParams = new URLSearchParams(window.location.search);
     const nome = urlParams.get('nome');
-    $('#staticBackdrop').modal('hide');
     window.location.href = '/pagina-usuario?nome=' + nome;
     }
 

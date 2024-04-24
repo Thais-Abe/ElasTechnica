@@ -47,9 +47,9 @@
                       <div class="modal-body">
                         <div class="modal-details-infos">
                           <h4>Data de Abertura: <span th:text="${chamado.dataInicio}"></span></h4>
-                          <h4>Solicitante: <span th:text="${chamado.nomeSolicitante}"></span></h4>
-                          <h4>Setor: <span th:text="${chamado.setor.nome}"></span></h4>
-                          <h4>Status: <span th:text="${chamado.status.nome}"></span></h4>
+                          <h4>Solicitante: <span th:text="${chamado.nome}"></span></h4>
+                          <h4>Setor: <span th:text="${chamado.setor}"></span></h4>
+                          <h4>Status: <span th:text="${chamado.status}"></span></h4>
                           <h4>Grau de Prioridade: <span th:text="${chamado.prioridade}"></span></h4>
                           <h4>Descrição: <span th:text="${chamado.descricao}"></span></h4>
                         </div>
@@ -83,7 +83,7 @@
             <td th:text="${chamado.titulo}"></td>
             <td th:text="${chamado.descricao}"></td>
             <td th:text="${chamado.prioridade}"></td>
-            <td th:text="${chamado.status.nome}"></td>
+            <td th:text="${chamado.status}"></td>
             <td th:text="${chamado.dataInicio}"></td>
             <td>
               <button type="button" class="btn-novo-chamado" data-bs-toggle="modal" th:attr="data-bs-target='#staticBackdrop-' + ${row.index}">Detalhes</button>
@@ -98,9 +98,9 @@
                     <div class="modal-body">
                       <div class="modal-details-infos">
                         <h4>Data de Abertura: <span th:text="${chamado.dataInicio}"></span></h4>
-                        <h4>Solicitante: <span th:text="${chamado.nomeSolicitante}"></span></h4>
+                        <h4>Solicitante: <span th:text="${chamado.nome}"></span></h4>
                         <h4>Setor: <span th:text="${chamado.setor.nome}"></span></h4>
-                        <h4>Status: <span th:text="${chamado.status.nome}"></span></h4>
+                        <h4>Status: <span th:text="${chamado.status}"></span></h4>
                         <h4>Grau de Prioridade: <span th:text="${chamado.prioridade}"></span></h4>
                         <h4>Descrição: <span th:text="${chamado.descricao}"></span></h4>
                       </div>
