@@ -7,6 +7,7 @@ import com.soulcode.demo.models.Status;
 import com.soulcode.demo.repositories.ChamadoRepository;
 import com.soulcode.demo.repositories.PessoaRepository;
 import com.soulcode.demo.services.ChamadoService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Controller
 public class UsuarioController {
@@ -40,12 +42,6 @@ public class UsuarioController {
         return "login-usuario";
     }
 
-    @GetMapping("/pagina-usuario")
-    public String paginaUsuario(@RequestParam("nome") String nome, Model model) {
-        model.addAttribute("nome", nome);
-        return "pagina-usuario";
-    }
-
     @GetMapping("/abertura-chamado")
     public String paginaAberturaChamado() {
         return "abertura-chamado";
@@ -57,12 +53,13 @@ public class UsuarioController {
     }
 
     @GetMapping("/detalhes-chamado-usuario/{Id}")
-    public String detalhesChamadousuario(@PathVariable("Id") int id, Model model) {
+    public String detalhesChamadousuario(@PathVariable("Id") int id, Model model, HttpSession session) {
         Chamado chamado = chamadoService.obterChamadoPorId(id);
 
         model.addAttribute("chamado", chamado);
 
-        return "detalhes-chamado-usuario";
+
+        return "redirect:/pagina-usuario";
     }
 
     @RequestMapping(value = "/detalhes-chamado-usuario", method = RequestMethod.POST)
@@ -92,6 +89,19 @@ public class UsuarioController {
         chamadoRepository.save(chamado);
 
         return "redirect:/pagina-usuario?nome=" + usuarioLogado.getNome();
+    }
+
+    private static boolean chamadosForamRegistrados = false;
+    @GetMapping("/pagina-usuario")
+    public String paginaUsuario(Model model, HttpServletRequest request, @RequestParam(required = false) String status, @RequestParam("nome") String nome) {
+
+        List<Chamado> chamadosDisponiveis = chamadoRepository.findAll();
+        List<Chamado> chamadosEmAtendimento = chamadoRepository.findAll();
+
+        model.addAttribute("chamadosDisponiveis", chamadosDisponiveis);
+        model.addAttribute("chamadosEmAtendimento", chamadosDisponiveis);
+        model.addAttribute("nome", nome);
+        return "redirect:/pagina-usuario?nome=" + nome;
     }
 
 }
