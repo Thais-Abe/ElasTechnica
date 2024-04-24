@@ -49,12 +49,12 @@ public class TecnicoController {
             }
         }
 
-        List<Chamado> chamadosDoBancoComStatus1 = chamadoService.getChamadosComStatus(1);
+        List<Chamado> chamadosDoBancoComStatusInicial = chamadoService.getChamadosComStatus(1);
 
-        chamadosDoBancoComStatus1 = chamadosDoBancoComStatus1.stream()
+        chamadosDoBancoComStatusInicial = chamadosDoBancoComStatusInicial.stream()
                 .filter(chamado -> !chamadosDisponiveis.contains(chamado)).toList();
 
-        chamadosDisponiveis.addAll(chamadosDoBancoComStatus1);
+        chamadosDisponiveis.addAll(chamadosDoBancoComStatusInicial);
 
         model.addAttribute("chamadosDisponiveis", chamadosDisponiveis);
         model.addAttribute("chamadosEmAtendimento", chamadosEmAtendimento);
@@ -78,6 +78,7 @@ public class TecnicoController {
 
         Chamado chamado = chamadoService.obterChamadoPorId(id);
         Pessoa tecnicoLogado = (Pessoa) session.getAttribute("usuarioLogado");
+        session.setAttribute("tecnicoLogadoNome", tecnicoLogado.getNome());
 
         Status statusAtualizado = null;
 
@@ -85,15 +86,13 @@ public class TecnicoController {
             case 1 -> statusAtualizado = statusRepository.findById(2).orElse(null); // na base de dados o id 2 = Em atendimento
             case 2 -> statusAtualizado = statusRepository.findById(3).orElse(null); // na base de dados o id 3 = Escalado para outro setor
             case 3 -> statusAtualizado = statusRepository.findById(4).orElse(null); // na base de dados o id 4 = Finalizado
-            default -> { return "redirect:/pagina-tecnico";}
+            default -> { return "redirect:/pagina-tecnico?nome=" + tecnicoLogado.getNome();}
         }
 
         if (statusAtualizado != null) {
             chamado.setStatus(statusAtualizado);
             chamado.setTecnico(tecnicoLogado);
             chamadoService.salvarChamado(chamado);
-
-            session.setAttribute("tecnicoLogadoNome", tecnicoLogado.getNome());
 
             return "redirect:/pagina-tecnico?nome=" + tecnicoLogado.getNome();
         } else {
