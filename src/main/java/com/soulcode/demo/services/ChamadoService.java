@@ -72,8 +72,8 @@ public class ChamadoService {
             usuario1.setTipo(tipoCliente);
             pessoaRepository.save(usuario1);
 
-            registrarChamado("Problema no monitor", "O monitor não liga", 1, LocalDateTime.now(), setorAdmin, statusAguardando, tecnicoLogado, usuario1);
-            registrarChamado("Problema na impressora", "A impressora não imprime", 2, LocalDateTime.now(), setorTI, statusAguardando, tecnicoLogado, usuario1);
+            registrarChamado("Problema no monitor", "O monitor não liga", 1, LocalDateTime.now(), setorAdmin, statusAguardando, null, usuario1);
+            registrarChamado("Problema na impressora", "A impressora não imprime", 2, LocalDateTime.now(), setorTI, statusAguardando, null, usuario1);
         }
 
         Pessoa usuario2 = pessoaRepository.findByEmail("carlosrocha@usuario.com");
@@ -85,9 +85,9 @@ public class ChamadoService {
             usuario2.setTipo(tipoCliente);
             pessoaRepository.save(usuario2);
 
-            registrarChamado("Problema no teclado", "Algumas teclas não funcionam", 3, LocalDateTime.now(), setorAdmin, statusAguardando, tecnicoLogado, usuario2);
-            registrarChamado("Problema no mouse", "O mouse está travando", 1, LocalDateTime.now(), setorTI, statusEmAtendimento, tecnicoLogado, usuario2);
-            registrarChamado("Problema na conexão de rede", "Não consigo me conectar à internet", 2, LocalDateTime.now(), setorTI, statusEmAtendimento, tecnicoLogado, usuario2);
+            registrarChamado("Problema no teclado", "Algumas teclas não funcionam", 3, LocalDateTime.now(), setorAdmin, statusAguardando, null, usuario2);
+            registrarChamado("Problema no mouse", "O mouse está travando", 1, LocalDateTime.now(), setorTI, statusAguardando, null, usuario2);
+            registrarChamado("Problema na conexão de rede", "Não consigo me conectar à internet", 2, LocalDateTime.now(), setorTI, statusAguardando, null, usuario2);
         }
     }
 

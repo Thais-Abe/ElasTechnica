@@ -36,24 +36,30 @@ public class AutenticacaoController {
 
     @RequestMapping(value = "/login-usuario", method = RequestMethod.POST)
     public String login(@RequestParam String email, @RequestParam String senha, Model model, HttpServletRequest request) {
+        // procura no banco de dados se a pessoa já existe, através do e-mail
         Pessoa usuario = pessoaRepository.findByEmail(email);
 
+        // verifica se o usuário existe e se a senha está correta
         if (usuario != null && usuario.getSenha().equals(senha)) {
             int tipoUsuario = usuario.getTipo().getId();
 
+            // cria uma sessão e define o usuário como logado, armazenando as informações do usuário logado em cache
             HttpSession session = request.getSession();
             session.setAttribute("usuarioLogado", usuario);
 
+            // redireciona para a página apropriada com base no tipo de usuário (técnico ou cliente)
             if (tipoUsuario == 1) {
                 return "redirect:/pagina-usuario?nome=" + usuario.getNome();
             } else {
                 return "redirect:/pagina-tecnico?nome=" + usuario.getNome();
             }
-
+        } else if (usuario != null && usuario.getEmail().equals(email)) {
+            model.addAttribute("error", "Senha incorreta");
         } else {
-            model.addAttribute("error", "E-mail ou senha incorretos");
-            return "login-usuario";
+            model.addAttribute("error", "E-mail e senha incorretos");
         }
+
+        return "login-usuario";
     }
 
 
