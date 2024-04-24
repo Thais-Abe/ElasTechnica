@@ -3,10 +3,11 @@ package com.soulcode.demo.controllers;
 import com.soulcode.demo.models.Chamado;
 import com.soulcode.demo.models.Pessoa;
 import com.soulcode.demo.models.Setor;
+import com.soulcode.demo.models.Status;
 import com.soulcode.demo.repositories.ChamadoRepository;
 import com.soulcode.demo.repositories.PessoaRepository;
 import com.soulcode.demo.services.ChamadoService;
-import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @Controller
 public class UsuarioController {
@@ -29,6 +29,7 @@ public class UsuarioController {
 
     Chamado chamado = new Chamado();
     Setor setor = new Setor();
+    Status statusInicial = new Status();
 
     public UsuarioController(ChamadoRepository chamadoRepository) {
         this.chamadoRepository = chamadoRepository;
@@ -39,11 +40,11 @@ public class UsuarioController {
         return "login-usuario";
     }
 
-//    @GetMapping("/pagina-usuario")
-//    public String paginaUsuario(@RequestParam("nome") String nome, Model model) {
-//        model.addAttribute("nome", nome);
-//        return "pagina-usuario";
-//    }
+    @GetMapping("/pagina-usuario")
+    public String paginaUsuario(@RequestParam("nome") String nome, Model model) {
+        model.addAttribute("nome", nome);
+        return "pagina-usuario";
+    }
 
     @GetMapping("/abertura-chamado")
     public String paginaAberturaChamado() {
@@ -61,40 +62,36 @@ public class UsuarioController {
 
         model.addAttribute("chamado", chamado);
 
-
         return "detalhes-chamado-usuario";
     }
 
     @RequestMapping(value = "/detalhes-chamado-usuario", method = RequestMethod.POST)
-    public String salvarSolicitacao( @RequestParam("prioridade") int prioridade, @RequestParam("titulo") String titulo,@RequestParam("descricao") String descricao, @RequestParam("setor") Setor setor){
-         chamado = new Chamado();
+    public String salvarSolicitacao(@RequestParam("prioridade") int prioridade,
+                                    @RequestParam("titulo") String titulo,
+                                    @RequestParam("descricao") String descricao,
+                                    @RequestParam("setor") Setor setor,
+                                    HttpSession session) {
+
+        Pessoa usuarioLogado = (Pessoa) session.getAttribute("usuarioLogado");
+
+        chamado = new Chamado();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime dataAtual = LocalDateTime.now();
         String dataFormatada = dataAtual.format(formatter);
         LocalDateTime dataConvertida = LocalDateTime.parse(dataFormatada, formatter);
+
+        statusInicial.setId(1);
 
         chamado.setDescricao(descricao);
         chamado.setTitulo(titulo);
         chamado.setSetor(setor);
         chamado.setPrioridade(prioridade);
         chamado.setDataInicio(dataConvertida);
+        chamado.setUsuario(usuarioLogado);
+        chamado.setStatus(statusInicial);
         chamadoRepository.save(chamado);
 
-        return "redirect:/pagina-usuario?nome=thais";
+        return "redirect:/pagina-usuario?nome=" + usuarioLogado.getNome();
     }
 
-        private static boolean chamadosForamRegistrados = false;
-    @GetMapping("/pagina-usuario")
-    public String paginaUsuario(Model model, HttpServletRequest request, @RequestParam(required = false) String status, @RequestParam("nome") String nome) {
-
-        List<Chamado> chamadosDisponiveis = chamadoRepository.findAll();
-        List<Chamado> chamadosEmAtendimento = chamadoRepository.findAll();
-
-        model.addAttribute("chamadosDisponiveis", chamadosDisponiveis);
-        model.addAttribute("chamadosEmAtendimento", chamadosDisponiveis);
-        model.addAttribute("nome", nome);
-        return "pagina-usuario";
-    }
 }
-
-

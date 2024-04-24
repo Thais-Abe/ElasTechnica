@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -62,25 +63,32 @@ public class ChamadoService {
         Tipo tipoCliente = new Tipo();
         tipoCliente.setId(1);
 
-        Pessoa usuario1 = new Pessoa();
-        usuario1.setNome("Maria Das Flores");
-        usuario1.setEmail("maria.usuario@gmail.com");
-        usuario1.setSenha("senha456");
-        usuario1.setTipo(tipoCliente);
-        pessoaRepository.save(usuario1);
+        Pessoa usuario1 = pessoaRepository.findByEmail("mariaflowers@usuario.com");
+        if (usuario1 == null) {
+            usuario1 = new Pessoa();
+            usuario1.setNome("Maria Das Flores");
+            usuario1.setEmail("mariaflowers@usuario.com");
+            usuario1.setSenha("mariazinhaflor321");
+            usuario1.setTipo(tipoCliente);
+            pessoaRepository.save(usuario1);
 
-        Pessoa usuario2 = new Pessoa();
-        usuario2.setNome("Carlos Rocha");
-        usuario2.setEmail("carlosrocha.user@gmail.com");
-        usuario2.setSenha("senha456");
-        usuario2.setTipo(tipoCliente);
-        pessoaRepository.save(usuario2);
+            registrarChamado("Problema no monitor", "O monitor não liga", 1, LocalDateTime.now(), setorAdmin, statusAguardando, tecnicoLogado, usuario1);
+            registrarChamado("Problema na impressora", "A impressora não imprime", 2, LocalDateTime.now(), setorTI, statusAguardando, tecnicoLogado, usuario1);
+        }
 
-        registrarChamado("Problema no monitor", "O monitor não liga", 1, LocalDateTime.now(), setorAdmin, statusAguardando, tecnicoLogado, usuario1);
-        registrarChamado("Problema na impressora", "A impressora não imprime", 2, LocalDateTime.now(), setorTI, statusAguardando, tecnicoLogado, usuario1);
-        registrarChamado("Problema no teclado", "Algumas teclas não funcionam", 3, LocalDateTime.now(), setorAdmin, statusAguardando, tecnicoLogado, usuario2);
-        registrarChamado("Problema no mouse", "O mouse está travando", 1, LocalDateTime.now(), setorTI, statusEmAtendimento, tecnicoLogado, usuario2);
-        registrarChamado("Problema na conexão de rede", "Não consigo me conectar à internet", 2, LocalDateTime.now(), setorTI, statusEmAtendimento, tecnicoLogado, usuario2);
+        Pessoa usuario2 = pessoaRepository.findByEmail("carlosrocha@usuario.com");
+        if (usuario2 == null) {
+            usuario2 = new Pessoa();
+            usuario2.setNome("Carlos Rocha");
+            usuario2.setEmail("carlosrocha@usuario.com");
+            usuario2.setSenha("carlosrocha091413");
+            usuario2.setTipo(tipoCliente);
+            pessoaRepository.save(usuario2);
+
+            registrarChamado("Problema no teclado", "Algumas teclas não funcionam", 3, LocalDateTime.now(), setorAdmin, statusAguardando, tecnicoLogado, usuario2);
+            registrarChamado("Problema no mouse", "O mouse está travando", 1, LocalDateTime.now(), setorTI, statusEmAtendimento, tecnicoLogado, usuario2);
+            registrarChamado("Problema na conexão de rede", "Não consigo me conectar à internet", 2, LocalDateTime.now(), setorTI, statusEmAtendimento, tecnicoLogado, usuario2);
+        }
     }
 
     public Chamado obterChamadoPorId(int id) {
@@ -92,4 +100,7 @@ public class ChamadoService {
         chamadoRepository.save(chamado);
     }
 
+    public List<Chamado> getChamadosComStatus(int status) {
+        return chamadoRepository.findByStatusId(status);
+    }
 }

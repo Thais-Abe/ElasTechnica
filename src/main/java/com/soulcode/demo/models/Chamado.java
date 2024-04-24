@@ -26,7 +26,7 @@ public class Chamado {
 
     @ManyToOne
     @JoinColumn(name = "status_id")
-    private Status Status;
+    private Status status;
 
     @ManyToOne
     @JoinColumn(name = "tecnico_id")
@@ -84,12 +84,12 @@ public class Chamado {
         Setor = setor;
     }
 
-    public com.soulcode.demo.models.Status getStatus() {
-        return Status;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setStatus(com.soulcode.demo.models.Status status) {
-        Status = status;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public Pessoa getTecnico() {

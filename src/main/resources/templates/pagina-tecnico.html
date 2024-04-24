@@ -6,12 +6,12 @@
   <title>Página do Técnico</title>
   <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
   <script src="./bootstrap/js/bootstrap.bundle.min.js"></script>
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
   <header>
     <img class="logo" src="./img/logo.png">
-    <h1 class="h1">Bem vindo <span th:text="${nome}"></span>!</h1>
+    <h1 class="h1">Bem vinda <span th:text="${nome}"></span>!</h1>
   </header>
   <section class="section-chamados">
     <div class="chamado-andamento">
@@ -28,7 +28,7 @@
               <th>Data de Início</th>
               <th>Detalhes</th>
             </tr>
-            <tr th:each="chamado, row : ${chamadosEmAtendimento}">
+            <tr th:each="chamado, row : ${chamadosDisponiveis}">
               <td th:text="${chamado.titulo}"></td>
               <td th:text="${chamado.descricao}"></td>
               <td th:text="${chamado.prioridade}"></td>

@@ -32,10 +32,12 @@ public class TecnicoController {
     private static boolean chamadosForamRegistrados = false;
 
     @GetMapping("/pagina-tecnico")
-    public String paginaTecnico(Model model, HttpServletRequest request, @RequestParam(required = false) String status) {
+    public String paginaTecnico(Model model, HttpServletRequest request, @RequestParam(required = false) String status, @RequestParam(required = false) String nome) {
         if ("atualizado".equals(status)) {
             return "redirect:/pagina-tecnico";
         }
+
+        model.addAttribute("nome", nome);
 
         if (!chamadosForamRegistrados) {
             chamadoService.registrarChamadosFicticios(request);
@@ -54,11 +56,19 @@ public class TecnicoController {
             }
         }
 
+        List<Chamado> chamadosDoBancoComStatus1 = chamadoService.getChamadosComStatus(1);
+
+        chamadosDoBancoComStatus1 = chamadosDoBancoComStatus1.stream()
+                .filter(chamado -> !chamadosDisponiveis.contains(chamado)).toList();
+
+        chamadosDisponiveis.addAll(chamadosDoBancoComStatus1);
+
         model.addAttribute("chamadosDisponiveis", chamadosDisponiveis);
         model.addAttribute("chamadosEmAtendimento", chamadosEmAtendimento);
 
         return "pagina-tecnico";
     }
+
 
     @GetMapping("/detalhes-chamado/{id}")
     public String detalhesChamado(@PathVariable("id") int id, Model model) {
