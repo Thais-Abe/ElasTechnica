@@ -54,6 +54,18 @@
                           <h4>Descrição: <span th:text="${chamado.descricao}"></span></h4>
                         </div>
                       </div>
+                      <form class="form" action="/mudar-status" method="post">
+                        <input type="hidden" name="id" th:value="${chamado.id}" />
+                        <input type="hidden" name="nome" value="${nome}" />
+                        <label for="status-disponivel">Alterar status do chamado:</label>
+                        <select name="status" id="status-disponivel">
+                          <option selected>Selecione</option>
+                          <option value="1">Em atendimento</option>
+                          <option value="2">Escalado para outro setor</option>
+                          <option value="3">Concluído</option>
+                        </select>
+                        <button type="submit">Confirmar</button>
+                      </form>
                     </div>
                   </div>
                 </div>
@@ -104,6 +116,18 @@
                         <h4>Grau de Prioridade: <span th:text="${chamado.prioridade}"></span></h4>
                         <h4>Descrição: <span th:text="${chamado.descricao}"></span></h4>
                       </div>
+                      <form class="form" action="/mudar-status" method="post">
+                        <input type="hidden" name="id" th:value="${chamado.id}" />
+                        <input type="hidden" name="nome" value="${nome}" />
+                        <label for="status-andamento">Alterar status do chamado:</label>
+                        <select name="status" id="status-andamento">
+                          <option selected>Selecione</option>
+                          <option value="1">Em atendimento</option>
+                          <option value="2">Escalado para outro setor</option>
+                          <option value="3">Concluído</option>
+                        </select>
+                        <button type="submit">Confirmar</button>
+                      </form>
                     </div>
                   </div>
                 </div>
