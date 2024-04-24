@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -103,4 +104,13 @@ public class ChamadoService {
     public List<Chamado> getChamadosComStatus(int status) {
         return chamadoRepository.findByStatusId(status);
     }
+
+    public LocalDateTime retornarDataAberturaChamado(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        LocalDateTime dataAtual = LocalDateTime.now();
+        String dataFormatada = dataAtual.format(formatter);
+        LocalDateTime dataConvertida = LocalDateTime.parse(dataFormatada, formatter);
+        return dataConvertida;
+    }
+
 }

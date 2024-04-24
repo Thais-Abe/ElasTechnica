@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -27,10 +28,7 @@ public class UsuarioController {
     @Autowired
     ChamadoService chamadoService;
 
-    @Autowired
-    PessoaRepository pessoaRepository;
-
-    Chamado chamado = new Chamado();
+    Chamado chamado;
     Setor setor = new Setor();
     Status statusInicial = new Status();
 
@@ -59,24 +57,22 @@ public class UsuarioController {
 
         model.addAttribute("chamado", chamado);
 
+        Pessoa usuarioLogado = (Pessoa) session.getAttribute("usuarioLogado");
 
-        return "redirect:/pagina-usuario";
+        return "redirect:/pagina-usuario?nome=" + usuarioLogado.getNome();
     }
 
     @RequestMapping(value = "/detalhes-chamado-usuario", method = RequestMethod.POST)
-    public String salvarSolicitacao(@RequestParam("prioridade") int prioridade,
-                                    @RequestParam("titulo") String titulo,
-                                    @RequestParam("descricao") String descricao,
+    public String salvarSolicitacao(@RequestParam("titulo") String titulo,
                                     @RequestParam("setor") Setor setor,
+                                    @RequestParam("prioridade") int prioridade,
+                                    @RequestParam("descricao") String descricao,
                                     HttpSession session) {
 
         Pessoa usuarioLogado = (Pessoa) session.getAttribute("usuarioLogado");
 
         chamado = new Chamado();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        LocalDateTime dataAtual = LocalDateTime.now();
-        String dataFormatada = dataAtual.format(formatter);
-        LocalDateTime dataConvertida = LocalDateTime.parse(dataFormatada, formatter);
+        LocalDateTime dataDoChamado = chamadoService.retornarDataAberturaChamado();
 
         statusInicial.setId(1);
 
@@ -84,7 +80,7 @@ public class UsuarioController {
         chamado.setTitulo(titulo);
         chamado.setSetor(setor);
         chamado.setPrioridade(prioridade);
-        chamado.setDataInicio(dataConvertida);
+        chamado.setDataInicio(dataDoChamado);
         chamado.setUsuario(usuarioLogado);
         chamado.setStatus(statusInicial);
         chamadoRepository.save(chamado);
@@ -92,15 +88,23 @@ public class UsuarioController {
         return "redirect:/pagina-usuario?nome=" + usuarioLogado.getNome();
     }
 
-    private static boolean chamadosForamRegistrados = false;
     @GetMapping("/pagina-usuario")
     public String paginaUsuario(Model model, HttpServletRequest request, @RequestParam(required = false) String status, @RequestParam("nome") String nome) {
 
-        List<Chamado> chamadosDisponiveis = chamadoRepository.findAll();
-        List<Chamado> chamadosEmAtendimento = chamadoRepository.findAll();
+        List<Chamado> todosChamados = chamadoRepository.findAll();
+        List<Chamado> chamadosEncerrados = new ArrayList<>();
+        List<Chamado> chamadosEmAndamento = new ArrayList<>();
 
-        model.addAttribute("chamadosDisponiveis", chamadosDisponiveis);
-        model.addAttribute("chamadosEmAtendimento", chamadosDisponiveis);
+        for (Chamado chamado : todosChamados) {
+            if (chamado.getStatus().getId() == 1) {
+                chamadosEmAndamento.add(chamado);
+            } else if (chamado.getStatus().getId() == 2 || chamado.getStatus().getId() == 3 || chamado.getStatus().getId() == 4) {
+                chamadosEncerrados.add(chamado);
+            }
+
+        }
+        model.addAttribute("chamadosEmAndamento", chamadosEmAndamento);
+        model.addAttribute("chamadosEncerrados", chamadosEncerrados);
         model.addAttribute("nome", nome);
         return "redirect:/pagina-usuario?nome=" + nome;
     }
