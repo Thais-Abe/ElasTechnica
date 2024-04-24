@@ -56,11 +56,19 @@ public class TecnicoController {
             }
         }
 
+        List<Chamado> chamadosDoBancoComStatus1 = chamadoService.getChamadosComStatus(1);
+
+        chamadosDoBancoComStatus1 = chamadosDoBancoComStatus1.stream()
+                .filter(chamado -> !chamadosDisponiveis.contains(chamado)).toList();
+
+        chamadosDisponiveis.addAll(chamadosDoBancoComStatus1);
+
         model.addAttribute("chamadosDisponiveis", chamadosDisponiveis);
         model.addAttribute("chamadosEmAtendimento", chamadosEmAtendimento);
 
         return "pagina-tecnico";
     }
+
 
     @GetMapping("/detalhes-chamado/{id}")
     public String detalhesChamado(@PathVariable("id") int id, Model model) {
